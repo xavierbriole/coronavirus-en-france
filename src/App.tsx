@@ -1,26 +1,42 @@
-import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { useMemo, useEffect } from 'react'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
 
-function App() {
+import ReactGA from 'react-ga'
+
+import Root from './UI/Root'
+
+export default function App() {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  )
+
+  useEffect(() => {
+    const isDevelopment = process.env.NODE_ENV === 'development'
+
+    ReactGA.initialize('UA-127796557-2', {
+      testMode: isDevelopment,
+      debug: isDevelopment,
+    })
+    ReactGA.pageview(window.location.pathname + window.location.search)
+  })
+
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <Root />
+      </Box>
+    </ThemeProvider>
   )
 }
-
-export default App
