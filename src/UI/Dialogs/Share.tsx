@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Input from '@mui/material/Input'
@@ -23,13 +23,13 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 export default function Share() {
   const [displaySnack, setDisplaySnack] = useState<boolean>(false)
 
-  const handleCopy = () => {
+  const handleCopy = useCallback(() => {
     setDisplaySnack(true)
-  }
+  }, [])
 
-  const handleCloseSnackbar = () => {
+  const handleCloseSnackbar = useCallback(() => {
     setDisplaySnack(false)
-  }
+  }, [])
 
   return (
     <Box sx={{ p: 4 }}>
