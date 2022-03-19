@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -13,9 +14,9 @@ interface MenuProps {
 }
 
 export default function Menu({ items }: MenuProps) {
-  const handleClick = (item: MenuItem) => {
+  const handleClick = useCallback((item: MenuItem) => {
     item.onClick(item)
-  }
+  }, [])
 
   return (
     <>
